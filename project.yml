@@ -1,4 +1,8 @@
 name: Slate
+
+include:
+  - path: project.local.yml
+
 options:
   bundleIdPrefix: com.damsac.slate
   deploymentTarget:
@@ -12,7 +16,6 @@ settings:
     IPHONEOS_DEPLOYMENT_TARGET: "17.0"
     CODE_SIGN_STYLE: Automatic
     CODE_SIGN_IDENTITY: "Apple Development"
-    DEVELOPMENT_TEAM: 733QG5V76U
 
 targets:
   Slate:

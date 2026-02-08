@@ -8,6 +8,31 @@ When committing code changes, check `workflows/prompts/` for any prompt files re
 - Fill out the `Result` section (outcome, approach taken, deviations, or `discarded`)
 - Stage the prompt file updates alongside the code changes in the same commit
 
+## Dev Environment
+
+Dev tools are provided by a Nix flake (`flake.nix`) and auto-activated via direnv (`.envrc`). Key files:
+
+| File | Purpose |
+|------|---------|
+| `flake.nix` | Pins xcodegen, swiftlint, xcbeautify, gnumake |
+| `.envrc` | `use flake` — direnv activates the devShell |
+| `Makefile` | `generate`, `build`, `lint`, `clean`, `help` |
+| `project.local.yml` | Per-developer settings (gitignored) — copy from `project.local.yml.template` |
+| `project.yml` | XcodeGen spec — includes `project.local.yml` when present |
+
+**Rule:** Always use `make generate` instead of bare `xcodegen generate`. The Makefile target validates that both `.entitlements` files contain the App Group identifier after generation.
+
+**Rule:** `DEVELOPMENT_TEAM` is per-developer via `project.local.yml`, not in `project.yml`. Never hardcode a team ID in committed files.
+
+**Rule:** `Slate.xcodeproj/` is gitignored — it's regenerated from `project.yml` by `make generate`. Never commit it.
+
+### Git Hooks (installed automatically by devShell)
+
+- **pre-commit**: If `project.yml` is staged, regenerates xcodeproj and validates entitlements. Runs SwiftLint `--strict` on staged `.swift` files (blocks commit on errors).
+- **post-merge**: If `project.yml` changed after pull, runs `make generate`. If `flake.nix`/`flake.lock` changed, prints a reminder to `direnv reload`.
+
+Hooks are Nix store paths symlinked into `.git/hooks/` — they update automatically when `flake.nix` changes and the shell is re-entered.
+
 ## Learnings
 
 ### App Groups entitlements must be configured when using shared containers
