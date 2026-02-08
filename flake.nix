@@ -7,9 +7,15 @@
   };
 
   outputs = { self, nixpkgs, flake-utils }:
-    flake-utils.lib.eachSystem [ "aarch64-darwin" ] (system:
+    flake-utils.lib.eachSystem [ "aarch64-darwin" "x86_64-linux" ] (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
+        isDarwin = pkgs.stdenv.isDarwin;
+
+        # Cross-platform packages available in CI and local dev
+        ciPackages = with pkgs; [
+          swiftlint
+        ];
 
         preCommitHook = pkgs.writeShellScript "pre-commit" ''
           # Validate entitlements if project.yml is being committed
@@ -59,13 +65,12 @@
       {
         devShells.default = pkgs.mkShell {
           name = "slate-dev";
-          packages = with pkgs; [
+          packages = ciPackages ++ pkgs.lib.optionals isDarwin (with pkgs; [
             xcodegen
-            swiftlint
             xcbeautify
             gnumake
-          ];
-          shellHook = ''
+          ]);
+          shellHook = pkgs.lib.optionalString isDarwin ''
             # Install git hooks from Nix store
             if [ -d .git ]; then
               mkdir -p .git/hooks
@@ -73,6 +78,18 @@
               ln -sf ${postMergeHook} .git/hooks/post-merge
             fi
             echo "Slate dev shell — run 'make help' for available targets"
+          '';
+        };
+
+        devShells.ci = pkgs.mkShell {
+          name = "slate-ci";
+          packages = ciPackages;
+          shellHook = ''
+            # Install pre-commit hook so Claude Code's commits are linted
+            if [ -d .git ]; then
+              mkdir -p .git/hooks
+              ln -sf ${preCommitHook} .git/hooks/pre-commit
+            fi
           '';
         };
       });

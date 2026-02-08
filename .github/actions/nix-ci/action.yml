@@ -1,0 +1,19 @@
+name: Setup Nix CI
+description: Install Nix with caching and activate the CI dev shell
+
+runs:
+  using: composite
+  steps:
+    - name: Install Nix
+      uses: DeterminateSystems/nix-installer-action@main
+
+    - name: Setup Nix cache
+      uses: DeterminateSystems/magic-nix-cache-action@main
+
+    - name: Activate CI dev shell
+      shell: bash
+      run: |
+        # Build the CI shell and add its tools to PATH for subsequent steps
+        nix develop .#ci --command bash -c 'echo "$PATH"' \
+          | tr ':' '\n' \
+          | grep '/nix/store' >> "$GITHUB_PATH"
