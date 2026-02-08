@@ -1,0 +1,7 @@
+# TODO
+
+- [ ] **Configure development team for code signing** — Add your Apple Development Team ID to `project.yml` (`DEVELOPMENT_TEAM` and `CODE_SIGN_STYLE: Automatic`) so App Groups work and the widget can share data with the main app. Without this, the app falls back to a local-only container and the widget won't show todos. See Xcode > Settings > Accounts for your Team ID (10-character string like `A1B2C3D4E5`).
+
+- [ ] **Understand why `xcodegen generate` wipes Xcode-made changes** — When you make changes directly in Xcode (e.g. adding files, changing build settings, configuring capabilities), running `xcodegen generate` regenerates `Slate.xcodeproj` from scratch based solely on `project.yml`. Any manual Xcode changes that aren't reflected in `project.yml` are lost. Need to learn: which changes should go in `project.yml` vs Xcode, how to avoid losing work, and whether to treat `project.yml` as the single source of truth (recommended) or find a hybrid workflow.
+
+- [ ] **Move `DEVELOPMENT_TEAM` into `flake.nix` so it's per-developer** — Currently `DEVELOPMENT_TEAM: 733QG5V76U` is hardcoded in `project.yml`, which will cause git conflicts when multiple devs work on the project. When building the Nix flake, have it inject the team ID from a local (gitignored) config (e.g. `.env.local` or a nix-level per-user setting) into `project.yml` at generation time, so each dev can use their own personal team without touching committed files. Consider templating `project.yml` or using an XcodeGen `--spec` override file for local settings.

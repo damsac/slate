@@ -1,0 +1,1847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily Todo App — UI Mocks</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #f0eeeb;
+      color: #1a1a1a;
+      padding: 40px 20px;
+    }
+
+    h1.page-title {
+      text-align: center;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 8px;
+    }
+
+    p.page-subtitle {
+      text-align: center;
+      font-size: 13px;
+      color: #bbb;
+      margin-bottom: 60px;
+    }
+
+    .screen-section {
+      margin-bottom: 80px;
+    }
+
+    .screen-section h2 {
+      text-align: center;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin-bottom: 6px;
+    }
+
+    .screen-section p.desc {
+      text-align: center;
+      font-size: 13px;
+      color: #bbb;
+      margin-bottom: 32px;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+
+    .phone-row {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .phone-frame {
+      width: 375px;
+      height: 812px;
+      background: #faf9f7;
+      border-radius: 44px;
+      overflow: hidden;
+      box-shadow:
+        0 0 0 1px rgba(0,0,0,0.06),
+        0 20px 60px rgba(0,0,0,0.1),
+        0 4px 16px rgba(0,0,0,0.06);
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .phone-frame.dark {
+      background: #141413;
+      color: #e8e6e1;
+    }
+
+    /* Status bar */
+    .status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 28px 0;
+      height: 54px;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .status-bar .time { font-size: 16px; font-weight: 600; }
+    .status-bar .icons { display: flex; gap: 6px; align-items: center; }
+    .status-bar .icons span { font-size: 13px; }
+
+    .dark .status-bar { color: #e8e6e1; }
+
+    /* Dynamic Island */
+    .dynamic-island {
+      width: 120px;
+      height: 34px;
+      background: #1a1a1a;
+      border-radius: 20px;
+      margin: 0 auto;
+      position: absolute;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+    }
+
+    /* Screen content */
+    .screen-content {
+      padding: 8px 24px 40px;
+      height: calc(100% - 54px);
+      overflow-y: auto;
+    }
+
+    /* ============================================
+       SCREEN 1: DAILY VIEW (MAIN)
+       ============================================ */
+
+    .greeting {
+      margin-top: 16px;
+      margin-bottom: 4px;
+    }
+
+    .greeting .date {
+      font-size: 13px;
+      font-weight: 500;
+      color: #999;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .greeting h1 {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-top: 4px;
+    }
+
+    .dark .greeting .date { color: #666; }
+    .dark .greeting h1 { color: #e8e6e1; }
+
+    .progress-ring {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 24px 0;
+      padding: 20px;
+      background: #f3f2ef;
+      border-radius: 16px;
+    }
+
+    .dark .progress-ring {
+      background: #1e1e1c;
+    }
+
+    .ring-svg {
+      width: 52px;
+      height: 52px;
+      transform: rotate(-90deg);
+    }
+
+    .ring-bg {
+      fill: none;
+      stroke: #e0dfdb;
+      stroke-width: 5;
+    }
+
+    .dark .ring-bg { stroke: #2a2a28; }
+
+    .ring-fill {
+      fill: none;
+      stroke: #1a1a1a;
+      stroke-width: 5;
+      stroke-linecap: round;
+      stroke-dasharray: 138.2;
+      stroke-dashoffset: 98.7;
+    }
+
+    .dark .ring-fill { stroke: #e8e6e1; }
+
+    .ring-text {
+      font-size: 14px;
+      font-weight: 500;
+      color: #666;
+    }
+
+    .ring-text strong {
+      font-size: 22px;
+      font-weight: 700;
+      color: #1a1a1a;
+      display: block;
+      letter-spacing: -0.5px;
+    }
+
+    .dark .ring-text strong { color: #e8e6e1; }
+    .dark .ring-text { color: #777; }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 28px 0 14px;
+    }
+
+    .section-header h3 {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #999;
+    }
+
+    .section-header .see-all {
+      font-size: 13px;
+      font-weight: 500;
+      color: #999;
+    }
+
+    .dark .section-header h3 { color: #555; }
+
+    .todo-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 16px 0;
+      border-bottom: 1px solid #eeedea;
+    }
+
+    .dark .todo-item { border-bottom-color: #222220; }
+
+    .todo-item:last-child { border-bottom: none; }
+
+    .checkbox {
+      width: 24px;
+      height: 24px;
+      border: 2px solid #ccc;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 1px;
+      position: relative;
+    }
+
+    .dark .checkbox { border-color: #444; }
+
+    .checkbox.checked {
+      background: #1a1a1a;
+      border-color: #1a1a1a;
+    }
+
+    .dark .checkbox.checked {
+      background: #e8e6e1;
+      border-color: #e8e6e1;
+    }
+
+    .checkbox.checked::after {
+      content: '✓';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .dark .checkbox.checked::after { color: #141413; }
+
+    .todo-text {
+      flex: 1;
+    }
+
+    .todo-text .title {
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 1.3;
+    }
+
+    .todo-text .title.done {
+      text-decoration: line-through;
+      color: #bbb;
+    }
+
+    .dark .todo-text .title.done { color: #555; }
+
+    .todo-text .meta {
+      font-size: 12px;
+      color: #aaa;
+      margin-top: 3px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 500;
+      padding: 2px 8px;
+      border-radius: 6px;
+      background: #eeedea;
+      color: #888;
+    }
+
+    .dark .tag { background: #2a2a28; color: #777; }
+
+    .tag.recurring { background: #e8f0e8; color: #5a8a5a; }
+    .dark .tag.recurring { background: #1a2a1a; color: #6a9a6a; }
+
+    .tag.timed { background: #e8ecf0; color: #5a7a9a; }
+    .dark .tag.timed { background: #1a1e2a; color: #6a8aaa; }
+
+    .tag.due-soon { background: #f0ebe8; color: #9a7a5a; }
+    .dark .tag.due-soon { background: #2a221a; color: #aa8a6a; }
+
+    .priority-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 8px;
+    }
+
+    .priority-dot.p1 { background: #d45; }
+    .priority-dot.p2 { background: #da5; }
+    .priority-dot.p3 { background: #5a8; }
+
+    .more-items {
+      text-align: center;
+      padding: 16px;
+      font-size: 13px;
+      color: #bbb;
+      font-weight: 500;
+    }
+
+    .more-items span {
+      display: inline-block;
+      padding: 8px 20px;
+      background: #eeedea;
+      border-radius: 20px;
+      color: #999;
+    }
+
+    .dark .more-items span { background: #1e1e1c; color: #666; }
+
+    /* FAB */
+    .fab {
+      position: absolute;
+      bottom: 40px;
+      right: 24px;
+      width: 56px;
+      height: 56px;
+      background: #1a1a1a;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+
+    .dark .fab { background: #e8e6e1; }
+
+    .fab span {
+      color: white;
+      font-size: 28px;
+      font-weight: 300;
+      line-height: 1;
+    }
+
+    .dark .fab span { color: #141413; }
+
+    /* ============================================
+       SCREEN 2: MORNING PLANNING
+       ============================================ */
+
+    .plan-header {
+      margin-top: 16px;
+      margin-bottom: 24px;
+    }
+
+    .plan-header h1 {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+
+    .plan-header p {
+      font-size: 14px;
+      color: #999;
+      margin-top: 4px;
+    }
+
+    .upcoming-banner {
+      background: #f3f2ef;
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 24px;
+    }
+
+    .dark .upcoming-banner { background: #1e1e1c; }
+
+    .upcoming-banner .label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #c4956a;
+      margin-bottom: 10px;
+    }
+
+    .upcoming-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 0;
+    }
+
+    .upcoming-item .name {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .upcoming-item .due {
+      font-size: 12px;
+      color: #c4956a;
+      font-weight: 500;
+    }
+
+    .recurring-section {
+      margin-bottom: 24px;
+    }
+
+    .recurring-section .sec-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 12px;
+    }
+
+    .recurring-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      background: #f3f2ef;
+      border-radius: 12px;
+      margin: 0 8px 8px 0;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .dark .recurring-chip { background: #1e1e1c; }
+
+    .recurring-chip .icon { font-size: 16px; }
+
+    .recurring-chip.selected {
+      background: #1a1a1a;
+      color: white;
+    }
+
+    .dark .recurring-chip.selected {
+      background: #e8e6e1;
+      color: #141413;
+    }
+
+    .quick-add {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px;
+      background: #f3f2ef;
+      border-radius: 14px;
+      margin-top: 20px;
+    }
+
+    .dark .quick-add { background: #1e1e1c; }
+
+    .quick-add .plus {
+      width: 28px;
+      height: 28px;
+      border: 2px dashed #ccc;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ccc;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .dark .quick-add .plus { border-color: #444; color: #444; }
+
+    .quick-add .placeholder {
+      font-size: 15px;
+      color: #bbb;
+    }
+
+    .plan-btn {
+      width: 100%;
+      padding: 18px;
+      background: #1a1a1a;
+      color: white;
+      border: none;
+      border-radius: 16px;
+      font-size: 16px;
+      font-weight: 600;
+      margin-top: 32px;
+      letter-spacing: -0.2px;
+    }
+
+    .dark .plan-btn {
+      background: #e8e6e1;
+      color: #141413;
+    }
+
+    /* ============================================
+       SCREEN 3: BACKLOG
+       ============================================ */
+
+    .backlog-header {
+      margin-top: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .backlog-header h1 {
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .filter-pills {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      overflow-x: auto;
+    }
+
+    .pill {
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      white-space: nowrap;
+      background: #f3f2ef;
+      color: #888;
+    }
+
+    .dark .pill { background: #1e1e1c; color: #777; }
+
+    .pill.active {
+      background: #1a1a1a;
+      color: white;
+    }
+
+    .dark .pill.active {
+      background: #e8e6e1;
+      color: #141413;
+    }
+
+    .backlog-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid #eeedea;
+    }
+
+    .dark .backlog-item { border-bottom-color: #222220; }
+
+    .backlog-item .info {
+      flex: 1;
+    }
+
+    .backlog-item .title {
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .backlog-item .due-date {
+      font-size: 12px;
+      color: #aaa;
+      margin-top: 3px;
+    }
+
+    .backlog-item .due-date.urgent { color: #c4956a; }
+
+    .add-to-day {
+      font-size: 12px;
+      font-weight: 500;
+      color: #999;
+      padding: 4px 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      align-self: center;
+    }
+
+    .dark .add-to-day { border-color: #333; }
+
+    /* ============================================
+       SCREEN 4: END OF DAY REVIEW
+       ============================================ */
+
+    .review-header {
+      margin-top: 16px;
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .review-header .moon { font-size: 40px; margin-bottom: 12px; }
+
+    .review-header h1 {
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .review-header p {
+      font-size: 14px;
+      color: #666;
+      margin-top: 4px;
+    }
+
+    .dark .review-header p { color: #777; }
+
+    .review-stats {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      margin-bottom: 32px;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat .num {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -1px;
+    }
+
+    .stat .label {
+      font-size: 12px;
+      color: #999;
+      margin-top: 2px;
+    }
+
+    .review-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px;
+      background: #1e1e1c;
+      border-radius: 14px;
+      margin-bottom: 10px;
+    }
+
+    .review-item .title {
+      flex: 1;
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .review-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .review-btn {
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      border: none;
+    }
+
+    .review-btn.move {
+      background: #2a2a28;
+      color: #e8e6e1;
+    }
+
+    .review-btn.drop {
+      background: transparent;
+      color: #666;
+    }
+
+    /* ============================================
+       SCREEN 5: WIDGET
+       ============================================ */
+
+    .widget-container {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .ios-homescreen {
+      width: 375px;
+      height: 812px;
+      border-radius: 44px;
+      overflow: hidden;
+      position: relative;
+      box-shadow:
+        0 0 0 1px rgba(0,0,0,0.06),
+        0 20px 60px rgba(0,0,0,0.1),
+        0 4px 16px rgba(0,0,0,0.06);
+      flex-shrink: 0;
+    }
+
+    .homescreen-bg {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #2a2520 0%, #1a1815 50%, #151310 100%);
+      padding: 14px 20px;
+    }
+
+    .hs-status {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 8px;
+      height: 44px;
+      color: #e8e6e1;
+      font-size: 15px;
+      font-weight: 600;
+      position: relative;
+    }
+
+    .hs-dynamic-island {
+      width: 120px;
+      height: 34px;
+      background: #000;
+      border-radius: 20px;
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .widget-card {
+      background: rgba(250, 249, 247, 0.95);
+      border-radius: 22px;
+      padding: 18px;
+      margin-top: 16px;
+    }
+
+    .widget-card.small {
+      width: calc(50% - 6px);
+      display: inline-block;
+      vertical-align: top;
+    }
+
+    .widget-card.small:first-of-type { margin-right: 8px; }
+
+    .widget-title {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .widget-title .app-icon {
+      width: 16px;
+      height: 16px;
+      background: #1a1a1a;
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .widget-title .app-icon span {
+      color: white;
+      font-size: 10px;
+    }
+
+    .widget-todo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 0;
+    }
+
+    .widget-checkbox {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #ccc;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .widget-checkbox.checked {
+      background: #1a1a1a;
+      border-color: #1a1a1a;
+      position: relative;
+    }
+
+    .widget-checkbox.checked::after {
+      content: '✓';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .widget-todo-text {
+      font-size: 14px;
+      font-weight: 500;
+      color: #1a1a1a;
+    }
+
+    .widget-todo-text.done {
+      text-decoration: line-through;
+      color: #bbb;
+    }
+
+    .widget-progress-bar {
+      height: 4px;
+      background: #e0dfdb;
+      border-radius: 2px;
+      margin-top: 14px;
+      overflow: hidden;
+    }
+
+    .widget-progress-fill {
+      height: 100%;
+      background: #1a1a1a;
+      border-radius: 2px;
+      width: 43%;
+    }
+
+    .widget-footer {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
+      font-size: 12px;
+      color: #aaa;
+    }
+
+    /* Small progress widget */
+    .mini-ring {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100px;
+    }
+
+    .mini-ring svg {
+      width: 64px;
+      height: 64px;
+      transform: rotate(-90deg);
+    }
+
+    .mini-ring .count {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-top: 6px;
+    }
+
+    .mini-ring .count-label {
+      font-size: 11px;
+      color: #999;
+    }
+
+    /* App icons row */
+    .hs-app-row {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 24px;
+      padding: 0 8px;
+    }
+
+    .hs-app {
+      width: 60px;
+      height: 60px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.1);
+    }
+
+    .hs-app.a1 { background: linear-gradient(135deg, #5ac8fa, #007aff); }
+    .hs-app.a2 { background: linear-gradient(135deg, #ffd60a, #ff9f0a); }
+    .hs-app.a3 { background: linear-gradient(135deg, #30d158, #28a745); }
+    .hs-app.a4 { background: linear-gradient(135deg, #bf5af2, #9b59b6); }
+
+    /* ============================================
+       SCREEN 6: ADD TASK
+       ============================================ */
+
+    .add-sheet {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #faf9f7;
+      border-radius: 24px 24px 0 0;
+      padding: 20px 24px 48px;
+      box-shadow: 0 -8px 40px rgba(0,0,0,0.1);
+    }
+
+    .dark .add-sheet {
+      background: #1e1e1c;
+      box-shadow: 0 -8px 40px rgba(0,0,0,0.4);
+    }
+
+    .sheet-handle {
+      width: 36px;
+      height: 4px;
+      background: #ddd;
+      border-radius: 2px;
+      margin: 0 auto 20px;
+    }
+
+    .dark .sheet-handle { background: #333; }
+
+    .add-input {
+      font-size: 20px;
+      font-weight: 500;
+      border: none;
+      background: none;
+      outline: none;
+      width: 100%;
+      padding: 8px 0;
+      color: #1a1a1a;
+      border-bottom: 2px solid #eeedea;
+      margin-bottom: 20px;
+    }
+
+    .dark .add-input {
+      color: #e8e6e1;
+      border-bottom-color: #2a2a28;
+    }
+
+    .option-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .option-chip {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 16px;
+      background: #f3f2ef;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #666;
+    }
+
+    .dark .option-chip { background: #2a2a28; color: #999; }
+
+    .option-chip.selected {
+      background: #1a1a1a;
+      color: white;
+    }
+
+    .dark .option-chip.selected {
+      background: #e8e6e1;
+      color: #141413;
+    }
+
+    .option-chip .icon { font-size: 16px; }
+
+    .time-picker {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      background: #f3f2ef;
+      border-radius: 12px;
+      margin-bottom: 16px;
+    }
+
+    .dark .time-picker { background: #2a2a28; }
+
+    .time-picker .icon { font-size: 18px; }
+    .time-picker .label { font-size: 14px; color: #888; flex: 1; }
+    .time-picker .value { font-size: 14px; font-weight: 600; }
+
+    .save-btn {
+      width: 100%;
+      padding: 16px;
+      background: #1a1a1a;
+      color: white;
+      border: none;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: 600;
+      margin-top: 8px;
+    }
+
+    .dark .save-btn {
+      background: #e8e6e1;
+      color: #141413;
+    }
+
+    /* Dimmed background */
+    .dimmed-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.3);
+    }
+
+    .dark .dimmed-bg { background: rgba(0,0,0,0.5); }
+
+    /* ============================================
+       SCREEN 7: NOTIFICATION
+       ============================================ */
+
+    .notification-mockup {
+      width: 375px;
+      height: 200px;
+      flex-shrink: 0;
+    }
+
+    .notif-banner {
+      background: rgba(250, 249, 247, 0.97);
+      border-radius: 20px;
+      padding: 16px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .notif-icon {
+      width: 40px;
+      height: 40px;
+      background: #1a1a1a;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .notif-content {
+      flex: 1;
+    }
+
+    .notif-app {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #999;
+    }
+
+    .notif-title {
+      font-size: 15px;
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    .notif-body {
+      font-size: 14px;
+      color: #666;
+      margin-top: 2px;
+    }
+
+    .notif-time {
+      font-size: 12px;
+      color: #bbb;
+      flex-shrink: 0;
+    }
+
+    /* ============================================
+       SCREEN: LOCK SCREEN NOTIFICATIONS
+       ============================================ */
+
+    .lockscreen {
+      background: linear-gradient(135deg, #1a1815 0%, #0f0e0d 100%);
+    }
+
+    .ls-time {
+      text-align: center;
+      margin-top: 60px;
+      margin-bottom: 40px;
+    }
+
+    .ls-time .time {
+      font-size: 72px;
+      font-weight: 300;
+      color: #e8e6e1;
+      letter-spacing: -2px;
+    }
+
+    .ls-time .date {
+      font-size: 16px;
+      color: #888;
+      margin-top: 4px;
+    }
+
+    .ls-notif {
+      margin: 0 4px;
+    }
+
+    .ls-notif .notif-banner {
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(20px);
+      color: #e8e6e1;
+    }
+
+    .ls-notif .notif-app { color: #888; }
+    .ls-notif .notif-title { color: #e8e6e1; }
+    .ls-notif .notif-body { color: #999; }
+    .ls-notif .notif-time { color: #666; }
+
+    /* ============================================
+       RESPONSIVE
+       ============================================ */
+
+    @media (max-width: 800px) {
+      .phone-row, .widget-container {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+
+    /* Tab bar */
+    .tab-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 84px;
+      background: #faf9f7;
+      border-top: 1px solid #eeedea;
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-start;
+      padding-top: 10px;
+    }
+
+    .dark .tab-bar {
+      background: #141413;
+      border-top-color: #222220;
+    }
+
+    .tab-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      font-size: 10px;
+      font-weight: 500;
+      color: #bbb;
+    }
+
+    .tab-item.active { color: #1a1a1a; }
+    .dark .tab-item.active { color: #e8e6e1; }
+
+    .tab-item .tab-icon {
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    /* Annotation labels */
+    .annotation {
+      position: absolute;
+      font-size: 11px;
+      font-weight: 500;
+      color: #c4956a;
+      letter-spacing: 0.3px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1 class="page-title">Daily — UI Concept</h1>
+  <p class="page-subtitle">A minimal daily todo app that respects your time</p>
+
+  <!-- ==========================================
+       1. DAILY VIEW — MAIN SCREEN
+       ========================================== -->
+  <div class="screen-section">
+    <h2>Today View</h2>
+    <p class="desc">Your focused daily list. Only top 3 priorities shown by default. Recurring items auto-populate. Tap to expand the full list.</p>
+
+    <div class="phone-row">
+      <!-- Light Mode -->
+      <div class="phone-frame">
+        <div class="dynamic-island"></div>
+        <div class="status-bar">
+          <span class="time">9:41</span>
+          <div class="icons"><span>●●●●</span> <span>🔋</span></div>
+        </div>
+        <div class="screen-content">
+          <div class="greeting">
+            <div class="date">Friday, Feb 7</div>
+            <h1>Today</h1>
+          </div>
+
+          <div class="progress-ring">
+            <svg class="ring-svg" viewBox="0 0 48 48">
+              <circle class="ring-bg" cx="24" cy="24" r="22" />
+              <circle class="ring-fill" cx="24" cy="24" r="22" />
+            </svg>
+            <div class="ring-text">
+              <strong>3 of 7</strong>
+              completed
+            </div>
+          </div>
+
+          <div class="section-header">
+            <h3>Priority</h3>
+          </div>
+
+          <div class="todo-item">
+            <div class="priority-dot p1"></div>
+            <div class="checkbox checked"></div>
+            <div class="todo-text">
+              <div class="title done">Morning meditation</div>
+              <div class="meta"><span class="tag recurring">Recurring</span> Done at 7:15am</div>
+            </div>
+          </div>
+
+          <div class="todo-item">
+            <div class="priority-dot p1"></div>
+            <div class="checkbox"></div>
+            <div class="todo-text">
+              <div class="title">File quarterly taxes</div>
+              <div class="meta"><span class="tag due-soon">Due Feb 10</span></div>
+            </div>
+          </div>
+
+          <div class="todo-item">
+            <div class="priority-dot p2"></div>
+            <div class="checkbox"></div>
+            <div class="todo-text">
+              <div class="title">Dentist appointment</div>
+              <div class="meta"><span class="tag timed">2:30 PM</span></div>
+            </div>
+          </div>
+
+          <div class="more-items">
+            <span>4 more items ↓</span>
+          </div>
+
+          <div class="section-header">
+            <h3>Completed</h3>
+          </div>
+
+          <div class="todo-item">
+            <div class="checkbox checked"></div>
+            <div class="todo-text">
+              <div class="title done">Take out trash</div>
+              <div class="meta"><span class="tag recurring">Recurring · Thu</span></div>
+            </div>
+          </div>
+
+          <div class="todo-item">
+            <div class="checkbox checked"></div>
+            <div class="todo-text">
+              <div class="title done">Reply to landlord</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="fab"><span>+</span></div>
+
+        <div class="tab-bar">
+          <div class="tab-item active">
+            <span class="tab-icon">◉</span>
+            Today
+          </div>
+          <div class="tab-item">
+            <span class="tab-icon">☰</span>
+            Backlog
+          </div>
+          <div class="tab-item">
+            <span class="tab-icon">⚙</span>
+            Settings
+          </div>
+        </div>
+      </div>
+
+      <!-- Dark Mode -->
+      <div class="phone-frame dark">
+        <div class="dynamic-island"></div>
+        <div class="status-bar">
+          <span class="time">9:41</span>
+          <div class="icons"><span>●●●●</span> <span>🔋</span></div>
+        </div>
+        <div class="screen-content">
+          <div class="greeting">
+            <div class="date">Friday, Feb 7</div>
+            <h1>Today</h1>
+          </div>
+
+          <div class="progress-ring">
+            <svg class="ring-svg" viewBox="0 0 48 48">
+              <circle class="ring-bg" cx="24" cy="24" r="22" />
+              <circle class="ring-fill" cx="24" cy="24" r="22" />
+            </svg>
+            <div class="ring-text">
+              <strong>3 of 7</strong>
+              completed
+            </div>
+          </div>
+
+          <div class="section-header">
+            <h3>Priority</h3>
+          </div>
+
+          <div class="todo-item">
+            <div class="priority-dot p1"></div>
+            <div class="checkbox checked"></div>
+            <div class="todo-text">
+              <div class="title done">Morning meditation</div>
+              <div class="meta"><span class="tag recurring">Recurring</span> Done at 7:15am</div>
+            </div>
+          </div>
+
+          <div class="todo-item">
+            <div class="priority-dot p1"></div>
+            <div class="checkbox"></div>
+            <div class="todo-text">
+              <div class="title">File quarterly taxes</div>
+              <div class="meta"><span class="tag due-soon">Due Feb 10</span></div>
+            </div>
+          </div>
+
+          <div class="todo-item">
+            <div class="priority-dot p2"></div>
+            <div class="checkbox"></div>
+            <div class="todo-text">
+              <div class="title">Dentist appointment</div>
+              <div class="meta"><span class="tag timed">2:30 PM</span></div>
+            </div>
+          </div>
+
+          <div class="more-items">
+            <span>4 more items ↓</span>
+          </div>
+
+          <div class="section-header">
+            <h3>Completed</h3>
+          </div>
+
+          <div class="todo-item">
+            <div class="checkbox checked"></div>
+            <div class="todo-text">
+              <div class="title done">Take out trash</div>
+              <div class="meta"><span class="tag recurring">Recurring · Thu</span></div>
+            </div>
+          </div>
+
+          <div class="todo-item">
+            <div class="checkbox checked"></div>
+            <div class="todo-text">
+              <div class="title done">Reply to landlord</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="fab"><span>+</span></div>
+
+        <div class="tab-bar">
+          <div class="tab-item active">
+            <span class="tab-icon">◉</span>
+            Today
+          </div>
+          <div class="tab-item">
+            <span class="tab-icon">☰</span>
+            Backlog
+          </div>
+          <div class="tab-item">
+            <span class="tab-icon">⚙</span>
+            Settings
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       2. MORNING PLANNING
+       ========================================== -->
+  <div class="screen-section">
+    <h2>Morning Planning</h2>
+    <p class="desc">Triggered by a morning notification. Recurring items are pre-selected. Upcoming deadlines are surfaced. Add custom tasks for the day.</p>
+
+    <div class="phone-row">
+      <div class="phone-frame">
+        <div class="dynamic-island"></div>
+        <div class="status-bar">
+          <span class="time">7:02</span>
+          <div class="icons"><span>●●●●</span> <span>🔋</span></div>
+        </div>
+        <div class="screen-content">
+          <div class="plan-header">
+            <h1>Plan your day</h1>
+            <p>Friday, February 7</p>
+          </div>
+
+          <div class="upcoming-banner">
+            <div class="label">⚡ Upcoming deadlines</div>
+            <div class="upcoming-item">
+              <span class="name">File quarterly taxes</span>
+              <span class="due">3 days</span>
+            </div>
+            <div class="upcoming-item">
+              <span class="name">Car registration renewal</span>
+              <span class="due">12 days</span>
+            </div>
+          </div>
+
+          <div class="recurring-section">
+            <div class="sec-label">Today's recurring</div>
+            <span class="recurring-chip selected"><span class="icon">🧘</span> Meditation</span>
+            <span class="recurring-chip selected"><span class="icon">🗑</span> Trash day</span>
+            <span class="recurring-chip selected"><span class="icon">📖</span> Read 20 min</span>
+            <span class="recurring-chip"><span class="icon">💪</span> Workout</span>
+          </div>
+
+          <div class="section-header" style="margin-top: 16px;">
+            <h3>Custom tasks</h3>
+          </div>
+
+          <div class="todo-item">
+            <div class="checkbox"></div>
+            <div class="todo-text">
+              <div class="title">Dentist appointment</div>
+              <div class="meta"><span class="tag timed">2:30 PM</span></div>
+            </div>
+          </div>
+
+          <div class="todo-item">
+            <div class="checkbox"></div>
+            <div class="todo-text">
+              <div class="title">Reply to landlord</div>
+            </div>
+          </div>
+
+          <div class="quick-add">
+            <div class="plus">+</div>
+            <span class="placeholder">Add another task...</span>
+          </div>
+
+          <button class="plan-btn">Start my day →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       3. BACKLOG
+       ========================================== -->
+  <div class="screen-section">
+    <h2>Backlog</h2>
+    <p class="desc">Everything you need to do eventually. Flat list, optional due dates. Filter by due soon to surface what's urgent. Pull items into today.</p>
+
+    <div class="phone-row">
+      <div class="phone-frame">
+        <div class="dynamic-island"></div>
+        <div class="status-bar">
+          <span class="time">9:41</span>
+          <div class="icons"><span>●●●●</span> <span>🔋</span></div>
+        </div>
+        <div class="screen-content">
+          <div class="backlog-header">
+            <h1>Backlog</h1>
+          </div>
+
+          <div class="filter-pills">
+            <span class="pill active">All</span>
+            <span class="pill">Due soon</span>
+            <span class="pill">No date</span>
+          </div>
+
+          <div class="backlog-item">
+            <div class="priority-dot p1" style="margin-top: 6px;"></div>
+            <div class="info">
+              <div class="title">File quarterly taxes</div>
+              <div class="due-date urgent">Due Feb 10 — 3 days</div>
+            </div>
+            <span class="add-to-day">+ Today</span>
+          </div>
+
+          <div class="backlog-item">
+            <div class="priority-dot p2" style="margin-top: 6px;"></div>
+            <div class="info">
+              <div class="title">Car registration renewal</div>
+              <div class="due-date urgent">Due Feb 19 — 12 days</div>
+            </div>
+            <span class="add-to-day">+ Today</span>
+          </div>
+
+          <div class="backlog-item">
+            <div class="priority-dot p2" style="margin-top: 6px;"></div>
+            <div class="info">
+              <div class="title">Schedule oil change</div>
+              <div class="due-date">No due date</div>
+            </div>
+            <span class="add-to-day">+ Today</span>
+          </div>
+
+          <div class="backlog-item">
+            <div class="priority-dot p3" style="margin-top: 6px;"></div>
+            <div class="info">
+              <div class="title">Research new dentist</div>
+              <div class="due-date">No due date</div>
+            </div>
+            <span class="add-to-day">+ Today</span>
+          </div>
+
+          <div class="backlog-item">
+            <div class="priority-dot p3" style="margin-top: 6px;"></div>
+            <div class="info">
+              <div class="title">Clean out garage</div>
+              <div class="due-date">No due date</div>
+            </div>
+            <span class="add-to-day">+ Today</span>
+          </div>
+
+          <div class="backlog-item">
+            <div class="priority-dot p3" style="margin-top: 6px;"></div>
+            <div class="info">
+              <div class="title">Fix kitchen faucet</div>
+              <div class="due-date">No due date</div>
+            </div>
+            <span class="add-to-day">+ Today</span>
+          </div>
+
+          <div class="backlog-item">
+            <div class="priority-dot p3" style="margin-top: 6px;"></div>
+            <div class="info">
+              <div class="title">Update home insurance</div>
+              <div class="due-date">Due Mar 15</div>
+            </div>
+            <span class="add-to-day">+ Today</span>
+          </div>
+        </div>
+
+        <div class="fab"><span>+</span></div>
+
+        <div class="tab-bar">
+          <div class="tab-item">
+            <span class="tab-icon">◉</span>
+            Today
+          </div>
+          <div class="tab-item active">
+            <span class="tab-icon">☰</span>
+            Backlog
+          </div>
+          <div class="tab-item">
+            <span class="tab-icon">⚙</span>
+            Settings
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       4. ADD TASK (BOTTOM SHEET)
+       ========================================== -->
+  <div class="screen-section">
+    <h2>Add Task</h2>
+    <p class="desc">Quick bottom sheet to add a task. Set a time for notification, choose priority, optionally add to backlog with a due date. Minimal friction.</p>
+
+    <div class="phone-row">
+      <div class="phone-frame">
+        <div class="dynamic-island"></div>
+        <div class="status-bar">
+          <span class="time">9:41</span>
+          <div class="icons"><span>●●●●</span> <span>🔋</span></div>
+        </div>
+
+        <div class="dimmed-bg"></div>
+
+        <div class="add-sheet">
+          <div class="sheet-handle"></div>
+
+          <div class="add-input" style="font-size: 20px; font-weight: 500; color: #1a1a1a;">
+            Go to sleep
+          </div>
+
+          <div class="option-row">
+            <span class="option-chip selected"><span class="icon">📌</span> Today</span>
+            <span class="option-chip"><span class="icon">📋</span> Backlog</span>
+          </div>
+
+          <div class="time-picker">
+            <span class="icon">🔔</span>
+            <span class="label">Remind me at</span>
+            <span class="value">9:30 PM</span>
+          </div>
+
+          <div class="time-picker">
+            <span class="icon">⚡</span>
+            <span class="label">Priority</span>
+            <span class="value">High</span>
+          </div>
+
+          <div class="time-picker">
+            <span class="icon">🔁</span>
+            <span class="label">Repeat</span>
+            <span class="value">Every day</span>
+          </div>
+
+          <button class="save-btn">Add task</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       5. END OF DAY REVIEW
+       ========================================== -->
+  <div class="screen-section">
+    <h2>End of Day</h2>
+    <p class="desc">Quick nightly review for unfinished items. Move to tomorrow, reschedule, or drop. If you skip review, items auto-roll to the next day.</p>
+
+    <div class="phone-row">
+      <div class="phone-frame dark">
+        <div class="dynamic-island"></div>
+        <div class="status-bar">
+          <span class="time">10:15</span>
+          <div class="icons"><span>●●●●</span> <span>🔋</span></div>
+        </div>
+        <div class="screen-content">
+          <div class="review-header">
+            <div class="moon">🌙</div>
+            <h1>Day in review</h1>
+            <p>Friday, February 7</p>
+          </div>
+
+          <div class="review-stats">
+            <div class="stat">
+              <div class="num">5</div>
+              <div class="label">Completed</div>
+            </div>
+            <div class="stat">
+              <div class="num">2</div>
+              <div class="label">Remaining</div>
+            </div>
+          </div>
+
+          <div style="font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: #555; margin-bottom: 14px;">
+            What about these?
+          </div>
+
+          <div class="review-item">
+            <div class="todo-text">
+              <div class="title">File quarterly taxes</div>
+              <div class="meta" style="margin-top: 4px;"><span class="tag due-soon">Due Feb 10</span></div>
+            </div>
+            <div class="review-actions">
+              <button class="review-btn move">→ Tomorrow</button>
+              <button class="review-btn drop">Drop</button>
+            </div>
+          </div>
+
+          <div class="review-item">
+            <div class="todo-text">
+              <div class="title">Schedule oil change</div>
+            </div>
+            <div class="review-actions">
+              <button class="review-btn move">→ Tomorrow</button>
+              <button class="review-btn drop">→ Backlog</button>
+            </div>
+          </div>
+
+          <button class="plan-btn" style="margin-top: 48px;">Done — goodnight ✦</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       6. HOME SCREEN WIDGETS
+       ========================================== -->
+  <div class="screen-section">
+    <h2>Home Screen Widgets</h2>
+    <p class="desc">Tap to check off items without opening the app. Medium widget shows your top 3 priorities. Small widget shows progress ring.</p>
+
+    <div class="phone-row">
+      <div class="ios-homescreen">
+        <div class="homescreen-bg">
+          <div class="hs-status">
+            <span>9:41</span>
+            <div class="hs-dynamic-island"></div>
+            <span>●●●● 🔋</span>
+          </div>
+
+          <!-- Medium checklist widget -->
+          <div class="widget-card" style="margin-top: 24px;">
+            <div class="widget-title">
+              <span class="app-icon"><span>✓</span></span>
+              Daily — Today
+            </div>
+
+            <div class="widget-todo">
+              <div class="widget-checkbox checked"></div>
+              <span class="widget-todo-text done">Morning meditation</span>
+            </div>
+            <div class="widget-todo">
+              <div class="widget-checkbox"></div>
+              <span class="widget-todo-text">File quarterly taxes</span>
+            </div>
+            <div class="widget-todo">
+              <div class="widget-checkbox"></div>
+              <span class="widget-todo-text">Dentist — 2:30 PM</span>
+            </div>
+
+            <div class="widget-progress-bar">
+              <div class="widget-progress-fill"></div>
+            </div>
+            <div class="widget-footer">
+              <span>3 of 7 done</span>
+              <span>+4 more</span>
+            </div>
+          </div>
+
+          <!-- Two small widgets side by side -->
+          <div style="margin-top: 16px; display: flex; gap: 12px;">
+            <div class="widget-card" style="flex: 1;">
+              <div class="widget-title">
+                <span class="app-icon"><span>✓</span></span>
+                Progress
+              </div>
+              <div class="mini-ring">
+                <svg viewBox="0 0 48 48">
+                  <circle class="ring-bg" cx="24" cy="24" r="20" style="stroke-width: 6;" />
+                  <circle style="fill: none; stroke: #1a1a1a; stroke-width: 6; stroke-linecap: round; stroke-dasharray: 125.6; stroke-dashoffset: 89.7;" cx="24" cy="24" r="20" />
+                </svg>
+                <span class="count">3/7</span>
+              </div>
+            </div>
+
+            <div class="widget-card" style="flex: 1;">
+              <div class="widget-title">
+                <span class="app-icon"><span>✓</span></span>
+                Next up
+              </div>
+              <div style="padding: 8px 0;">
+                <div style="font-size: 15px; font-weight: 600; margin-bottom: 4px;">File taxes</div>
+                <div style="font-size: 12px; color: #c4956a; font-weight: 500;">Due in 3 days</div>
+                <div style="font-size: 14px; font-weight: 500; margin-top: 14px;">Dentist</div>
+                <div style="font-size: 12px; color: #5a7a9a;">2:30 PM</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- App icons row -->
+          <div class="hs-app-row" style="margin-top: 40px;">
+            <div class="hs-app a1"></div>
+            <div class="hs-app a2"></div>
+            <div class="hs-app a3"></div>
+            <div class="hs-app a4"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       7. NOTIFICATIONS
+       ========================================== -->
+  <div class="screen-section">
+    <h2>Notifications</h2>
+    <p class="desc">Morning planning nudge, time-based reminders for specific tasks, and due date warnings. Actionable — tap to check off or snooze.</p>
+
+    <div class="phone-row">
+      <div class="phone-frame dark lockscreen">
+        <div class="dynamic-island"></div>
+        <div class="status-bar" style="color: #e8e6e1;">
+          <span class="time">9:28</span>
+          <div class="icons"><span>●●●●</span> <span>🔋</span></div>
+        </div>
+        <div class="screen-content" style="padding-top: 0;">
+          <div class="ls-time">
+            <div class="time">9:28</div>
+            <div class="date">Friday, February 7</div>
+          </div>
+
+          <div class="ls-notif">
+            <div class="notif-banner">
+              <div class="notif-icon">✓</div>
+              <div class="notif-content">
+                <div class="notif-app">Daily</div>
+                <div class="notif-title">Time to wind down</div>
+                <div class="notif-body">Go to sleep is coming up at 10:00 PM</div>
+              </div>
+              <div class="notif-time">now</div>
+            </div>
+
+            <div class="notif-banner">
+              <div class="notif-icon">✓</div>
+              <div class="notif-content">
+                <div class="notif-app">Daily</div>
+                <div class="notif-title">Don't forget</div>
+                <div class="notif-body">Dentist appointment at 2:30 PM</div>
+              </div>
+              <div class="notif-time">2:00 PM</div>
+            </div>
+
+            <div class="notif-banner">
+              <div class="notif-icon">✓</div>
+              <div class="notif-content">
+                <div class="notif-app">Daily</div>
+                <div class="notif-title">Good morning ✦</div>
+                <div class="notif-body">You have 3 recurring tasks and 2 upcoming deadlines. Plan your day?</div>
+              </div>
+              <div class="notif-time">7:00 AM</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

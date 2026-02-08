@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "mermaid": {
+      "type": "stdio",
+      "command": "nix run nixpkgs#bunx",
+      "args": [
+        "claude-mermaid"
+      ],
+      "env": {}
+    }
+  }
+}

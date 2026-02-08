@@ -1,0 +1,15 @@
+# Xcode
+build/
+DerivedData/
+*.xcuserstate
+xcuserdata/
+*.xcworkspace/xcuserdata/
+*.ipa
+*.dSYM
+*.dSYM.zip
+
+# OS
+.DS_Store
+
+# Project-specific
+.claude/settings.local.json
