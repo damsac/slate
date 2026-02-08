@@ -80,11 +80,11 @@ struct TodoListView: View {
                     .onSubmit(addTodo)
 
                 Menu {
-                    ForEach(Priority.allCases) { p in
+                    ForEach(Priority.allCases) { priority in
                         Button {
-                            newTodoPriority = p
+                            newTodoPriority = priority
                         } label: {
-                            Label(p.label, systemImage: p == newTodoPriority ? "checkmark" : "")
+                            Label(priority.label, systemImage: priority == newTodoPriority ? "checkmark" : "")
                         }
                     }
                 } label: {
@@ -137,7 +137,10 @@ struct TodoListView: View {
                             .tint(.indigo)
                         }
                     }
-                    .listRowInsets(EdgeInsets(top: Theme.spacingSM, leading: Theme.spacingLG + 4, bottom: Theme.spacingSM, trailing: Theme.spacingLG))
+                    .listRowInsets(EdgeInsets(
+                        top: Theme.spacingSM, leading: Theme.spacingLG + 4,
+                        bottom: Theme.spacingSM, trailing: Theme.spacingLG
+                    ))
                 }
                 .onDelete(perform: deleteTodos)
                 .onMove(perform: moveTodos)
@@ -182,8 +185,8 @@ struct TodoListView: View {
     private func moveTodos(from source: IndexSet, to destination: Int) {
         var reordered = todos
         reordered.move(fromOffsets: source, toOffset: destination)
-        for (i, todo) in reordered.enumerated() {
-            todo.position = i
+        for (index, todo) in reordered.enumerated() {
+            todo.position = index
         }
         saveAndReload()
     }
@@ -254,8 +257,8 @@ struct EditTodoView: View {
                 }
                 Section("Priority") {
                     Picker("Priority", selection: $todo.priority) {
-                        ForEach(Priority.allCases) { p in
-                            Text(p.label).tag(p)
+                        ForEach(Priority.allCases) { priority in
+                            Text(priority.label).tag(priority)
                         }
                     }
                     .pickerStyle(.segmented)
@@ -265,7 +268,7 @@ struct EditTodoView: View {
                         get: { todo.dueDate != nil },
                         set: { todo.dueDate = $0 ? .now : nil }
                     ))
-                    if let _ = todo.dueDate {
+                    if todo.dueDate != nil {
                         DatePicker(
                             "Due",
                             selection: Binding(

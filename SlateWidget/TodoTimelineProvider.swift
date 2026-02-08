@@ -17,7 +17,7 @@ struct TodoSnapshot: Identifiable {
 struct TodoTimelineProvider: TimelineProvider {
     func placeholder(in context: Context) -> TodoEntry {
         TodoEntry(date: .now, todos: [
-            TodoSnapshot(id: UUID().uuidString, title: "Sample todo", done: false, priority: .medium),
+            TodoSnapshot(id: UUID().uuidString, title: "Sample todo", done: false, priority: .medium)
         ])
     }
 

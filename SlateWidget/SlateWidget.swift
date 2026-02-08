@@ -15,7 +15,7 @@ struct TodoWidget: Widget {
             .systemMedium,
             .accessoryRectangular,
             .accessoryCircular,
-            .accessoryInline,
+            .accessoryInline
         ])
     }
 }

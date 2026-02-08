@@ -31,6 +31,7 @@ enum PersistenceConfig {
             // Fallback for simulator/development when App Group entitlement
             // is not available (no development team configured for signing).
             // The widget won't share data in this mode, but the app won't crash.
+            // swiftlint:disable:next line_length
             print("⚠️ App Group container unavailable — using default documents directory. Widget data sharing will not work.")
             containerURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         }
