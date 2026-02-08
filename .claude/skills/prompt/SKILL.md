@@ -1,11 +1,11 @@
 ---
 name: prompt
-description: Prompt engineering workflow. Use when the user says "/prompt", "make a prompt", "prompt", or wants to turn an idea into a well-structured prompt. Cleans up raw input, presents for review, then executes via subagent while keeping the main conversation concise.
+description: Prompt engineering workflow. Use when the user says "/prompt", "make a prompt", "prompt", or wants to turn an idea into a well-structured prompt. Cleans up raw input, presents for review, then enters plan mode for execution.
 ---
 
 # Prompt
 
-Turn raw user input into a well-engineered prompt, review it, then execute.
+Turn raw user input into a well-engineered prompt, review it, then plan and execute.
 
 ## Critical Rules
 
@@ -42,11 +42,11 @@ Only after "Do it". Iterate on the prompt one more time using conversation conte
 
 Surface warnings before executing so the user can reconsider.
 
-### 4. Execute via Subagent
+### 4. Plan & Execute
 
-Launch a `Task` tool subagent (`general-purpose` type) with the final prompt. Fresh context window, main conversation stays lean.
+Enter plan mode (`EnterPlanMode`) with the final iterated prompt. Explore the codebase, design the implementation, and present the plan for user approval before making changes.
 
-Summarize subagent progress concisely — relay what matters, not full output.
+Execute in the main conversation — no subagent.
 
 ### 5. Save Prompt File
 
@@ -70,9 +70,17 @@ created: "<ISO 8601 timestamp>"
 
 <The cleaned-up prompt the human approved before hitting "do it">
 
-## Agent Prompt
+## Plan
 
-<The iterated prompt Claude used to kick off the subagent>
+<The iterated prompt Claude built from the human's input — includes analysis, architecture considerations, and implementation approach>
+
+## Autonomous Considerations
+
+<Decisions Claude made without explicit human direction during planning/execution. What was inferred, assumed, or chosen independently. Reviewers should verify these align with intent.>
+
+## Flagged Issues & Resolutions
+
+<Issues Claude surfaced during iteration/planning and how the developer chose to handle them. Empty if none were flagged.>
 
 ## Result
 
