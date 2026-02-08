@@ -1,6 +1,6 @@
 ---
 name: prompt
-description: Prompt engineering workflow. Use when the user says "make a prompt", "prompt", or wants to turn an idea into a well-structured prompt. Cleans up raw input, presents for review, then executes via subagent while keeping the main conversation concise.
+description: Prompt engineering workflow. Use when the user says "/prompt", "make a prompt", "prompt", or wants to turn an idea into a well-structured prompt. Cleans up raw input, presents for review, then executes via subagent while keeping the main conversation concise.
 ---
 
 # Prompt

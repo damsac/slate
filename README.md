@@ -11,17 +11,17 @@ Slate is built with [Claude Code](https://docs.anthropic.com/en/docs/claude-code
 | Command | What it does |
 |---------|-------------|
 | `/setup` | Interactive walkthrough: checks your system, installs tools, generates the project, builds, and optionally deploys to a physical device |
-| `make a prompt` | Prompt engineering workflow — structures your idea, reviews it with you, executes via subagent, saves to `workflows/prompts/` |
-| `meta` or `document this session` | Creates a developer journal entry in `workflows/meta/` capturing decisions, problems, and thinking |
+| `/prompt` | Prompt engineering workflow — structures your idea, reviews it with you, executes via subagent, saves to `workflows/prompts/` |
+| `/meta-workflow` | Creates a developer journal entry in `workflows/meta/` capturing decisions, problems, and thinking. Run after completing a PR or feature. |
 | `open xcode` | Opens `Slate.xcodeproj` |
 
 ### Typical flow
 
 1. **Have an idea** — describe what you want to build or change
-2. **`make a prompt`** — Claude cleans up your thinking, you review, say "Do it"
+2. **`/prompt`** — Claude cleans up your thinking, you review, say "Do it"
 3. **Claude executes** — code changes happen via subagent, main conversation stays lean
 4. **Commit** — prompt files auto-update with commit hash and results
-5. **`meta`** — document the session for future reference
+5. **`/meta-workflow`** — document the session for future reference
 
 ### Project knowledge
 
