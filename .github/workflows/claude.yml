@@ -30,14 +30,15 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup Nix CI
-        uses: ./.github/actions/nix-ci
-
       - name: Run Claude Code
         id: claude
         uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          prompt: |
+            Before opening a PR, review your own changes for code quality,
+            correctness, and style. Fix any issues you find rather than
+            leaving them for a separate review pass. Use the /review-pr skill to fix issues.
           allowed_tools: |
             Read,Grep,Glob,Task,Edit,Write
             Bash(git diff:*)
@@ -50,4 +51,3 @@ jobs:
             Bash(gh pr view:*)
             Bash(gh issue create:*)
             Bash(make *)
-            Bash(swiftlint *)

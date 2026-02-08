@@ -3,7 +3,7 @@ SCHEME := Slate
 APP_GROUP := group.com.damsac.slate.shared
 ENTITLEMENTS := Slate/Slate.entitlements SlateWidget/SlateWidget.entitlements
 
-.PHONY: generate build lint clean help
+.PHONY: generate build test lint clean help
 
 generate: ## Generate Xcode project and validate entitlements
 	@test -f project.local.yml || touch project.local.yml
@@ -18,13 +18,22 @@ generate: ## Generate Xcode project and validate entitlements
 	@echo "Project generated — entitlements validated."
 
 build: generate ## Build for simulator (no code signing required)
-	xcodebuild \
+	set -o pipefail && xcodebuild \
 		-scheme $(SCHEME) \
 		-destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
 		-configuration Debug \
 		CODE_SIGN_IDENTITY=- \
 		CODE_SIGNING_REQUIRED=NO \
 		build 2>&1 | xcbeautify
+
+test: generate ## Run unit tests on simulator
+	set -o pipefail && xcodebuild \
+		-scheme $(SCHEME) \
+		-destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
+		-configuration Debug \
+		CODE_SIGN_IDENTITY=- \
+		CODE_SIGNING_REQUIRED=NO \
+		test 2>&1 | xcbeautify
 
 lint: ## Lint Swift sources
 	swiftlint lint Slate/ SlateWidget/

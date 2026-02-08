@@ -12,11 +12,6 @@
         pkgs = nixpkgs.legacyPackages.${system};
         isDarwin = pkgs.stdenv.isDarwin;
 
-        # Cross-platform packages available in CI and local dev
-        ciPackages = with pkgs; [
-          swiftlint
-        ];
-
         preCommitHook = pkgs.writeShellScript "pre-commit" ''
           # Validate entitlements if project.yml is being committed
           if git diff --cached --name-only | grep -qE '(project\.yml|project\.local\.yml)'; then
@@ -65,7 +60,8 @@
       {
         devShells.default = pkgs.mkShell {
           name = "slate-dev";
-          packages = ciPackages ++ pkgs.lib.optionals isDarwin (with pkgs; [
+          packages = pkgs.lib.optionals isDarwin (with pkgs; [
+            swiftlint
             xcodegen
             xcbeautify
             gnumake
@@ -81,16 +77,5 @@
           '';
         };
 
-        devShells.ci = pkgs.mkShell {
-          name = "slate-ci";
-          packages = ciPackages;
-          shellHook = ''
-            # Install pre-commit hook so Claude Code's commits are linted
-            if [ -d .git ]; then
-              mkdir -p .git/hooks
-              ln -sf ${preCommitHook} .git/hooks/pre-commit
-            fi
-          '';
-        };
       });
 }
