@@ -73,6 +73,30 @@
               ln -sf ${preCommitHook} .git/hooks/pre-commit
               ln -sf ${postMergeHook} .git/hooks/post-merge
             fi
+
+            # Check Xcode version
+            if command -v xcodebuild &> /dev/null; then
+              XCODE_VERSION=$(xcodebuild -version 2>/dev/null | head -n1 | awk '{print $2}' | cut -d. -f1)
+              if [ -n "$XCODE_VERSION" ]; then
+                if [ "$XCODE_VERSION" -ge 26 ]; then
+                  echo "⚠️  WARNING: Xcode $XCODE_VERSION detected"
+                  echo "   Known issue: CLI builds may fail with linker errors"
+                  echo "   Workaround: Use Xcode GUI (Cmd+R) or see Issue #6"
+                fi
+              fi
+            else
+              echo "⚠️  WARNING: xcodebuild not found — Xcode may not be installed"
+            fi
+
+            # Check disk space
+            DISK_SPACE=$(df -k . | tail -1 | awk '{print $4}')
+            DISK_SPACE_GB=$((DISK_SPACE / 1024 / 1024))
+            if [ "$DISK_SPACE_GB" -lt 10 ]; then
+              echo "⚠️  WARNING: Low disk space detected (${DISK_SPACE_GB}GB free)"
+              echo "   Xcode DerivedData can consume significant space"
+              echo "   To free space: rm -rf ~/Library/Developer/Xcode/DerivedData"
+            fi
+
             echo "Slate dev shell — run 'make help' for available targets"
           '';
         };
