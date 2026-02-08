@@ -98,6 +98,6 @@ jobs:
             --allowedTools "Read,Grep,Glob,Task,Edit,Write,Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*),Bash(gh issue create:*),Bash(git add:*),Bash(git commit:*),Bash(git push:*),Bash(git diff:*),Bash(git log:*)"
             --system-prompt "Read CLAUDE.md first for project-specific coding standards and patterns."
           prompt: |
-            /review-pr
+            Review this PR thoroughly.
             REPO: ${{ github.repository }}
             PR_NUMBER: ${{ github.event.workflow_run.pull_requests[0].number }}
