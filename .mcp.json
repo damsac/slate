@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "mermaid": {
+      "type": "stdio",
+      "command": "nix",
+      "args": [
+        "run",
+        "nixpkgs#bun",
+        "--",
+        "x",
+        "claude-mermaid"
+      ],
+      "env": {
+        "PUPPETEER_SKIP_DOWNLOAD": "true",
+        "PUPPETEER_EXECUTABLE_PATH": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+      }
+    }
+  }
+}
