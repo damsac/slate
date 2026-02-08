@@ -39,4 +39,4 @@ jobs:
             actions: read
           claude_args: |
             --allowedTools "Read,Grep,Glob,Task,Edit,Write,Bash(git diff:*),Bash(git log:*),Bash(git fetch origin:*),Bash(git checkout:*),Bash(git switch:*),Bash(git add:*),Bash(git commit:*),Bash(git push:*),Bash(gh pr create:*),Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*),Bash(gh issue create:*),Bash(gh issue comment:*),Bash(make *)"
-            --system-prompt "Read CLAUDE.md first for project-specific coding standards and patterns. Before opening a PR, review your own changes for code quality, correctness, and style. Fix any issues you find rather than leaving them for a separate review pass."
+            --system-prompt "Read CLAUDE.md first for project-specific coding standards and patterns. Before opening a PR, review your own changes for code quality, correctness, and style. Fix any issues you find rather than leaving them for a separate review pass. When asked to open a PR, always use 'gh pr create' to create it directly instead of providing a manual link."
