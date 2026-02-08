@@ -1,6 +1,7 @@
 .DEFAULT_GOAL := help
 SCHEME := Slate
-APP_GROUP := group.com.damsac.slate.shared
+# Read APP_GROUP_IDENTIFIER from project.local.yml if present, otherwise use default
+APP_GROUP := $(shell grep 'APP_GROUP_IDENTIFIER:' project.local.yml 2>/dev/null | awk '{print $$2}' || echo "group.com.damsac.slate.shared")
 ENTITLEMENTS := Slate/Slate.entitlements SlateWidget/SlateWidget.entitlements
 
 .PHONY: generate build test lint clean help

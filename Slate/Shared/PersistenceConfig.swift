@@ -2,7 +2,14 @@ import Foundation
 import SwiftData
 
 enum PersistenceConfig {
-    static let appGroupIdentifier = "group.com.damsac.slate.shared"
+    static let appGroupIdentifier: String = {
+        // Read from Info.plist which is generated from build settings
+        if let identifier = Bundle.main.object(forInfoDictionaryKey: "AppGroupIdentifier") as? String {
+            return identifier
+        }
+        // Fallback to default if not configured
+        return "group.com.damsac.slate.shared"
+    }()
     static let schemaVersion = 2
 
     static var modelContainer: ModelContainer {

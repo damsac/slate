@@ -1,5 +1,16 @@
 # Copy to project.local.yml and fill in your values.
 # project.local.yml is gitignored — per-developer settings only.
+
+# Optional: Override bundle ID prefix for free developer accounts
+# Uncomment and set to your personal prefix (e.g., com.yourusername)
+# options:
+#   bundleIdPrefix: com.yourusername.slate
+
 settings:
   base:
     DEVELOPMENT_TEAM: YOUR_TEAM_ID_HERE  # Xcode > Settings > Accounts > Team ID
+    # Optional: Override individual bundle IDs if needed
+    # PRODUCT_BUNDLE_IDENTIFIER_SLATE: com.yourusername.slate
+    # PRODUCT_BUNDLE_IDENTIFIER_WIDGET: com.yourusername.slate.widget
+    # PRODUCT_BUNDLE_IDENTIFIER_TESTS: com.yourusername.slate.tests
+    # APP_GROUP_IDENTIFIER: group.com.yourusername.slate.shared

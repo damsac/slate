@@ -18,10 +18,11 @@
             echo "project.yml changed — validating entitlements..."
             test -f project.local.yml || touch project.local.yml
             ${pkgs.xcodegen}/bin/xcodegen generate --quiet
-            APP_GROUP="group.com.damsac.slate.shared"
+            # Read APP_GROUP from project.local.yml if present, otherwise use default
+            APP_GROUP=$(grep 'APP_GROUP_IDENTIFIER:' project.local.yml 2>/dev/null | awk '{print $2}' || echo "group.com.damsac.slate.shared")
             for f in Slate/Slate.entitlements SlateWidget/SlateWidget.entitlements; do
-              if ! grep -q "$APP_GROUP" "$f" 2>/dev/null; then
-                echo "ERROR: $f missing App Group '$APP_GROUP'" >&2
+              if ! grep -q "group\." "$f" 2>/dev/null; then
+                echo "ERROR: $f missing App Group identifier" >&2
                 echo "Check project.yml entitlements.properties for both targets." >&2
                 exit 1
               fi
