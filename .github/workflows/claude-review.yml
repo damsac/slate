@@ -54,6 +54,11 @@ jobs:
         uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          additional_permissions: |
+            actions: read
+          claude_args: |
+            --allowedTools "Read,Grep,Glob,Task,Edit,Write,Bash(git diff:*),Bash(git log:*),Bash(git add:*),Bash(git commit:*),Bash(git push:*),Bash(gh pr comment:*)"
+            --system-prompt "Read CLAUDE.md first for project-specific coding standards and patterns."
           prompt: |
             CI tests failed. Fix the failing tests or the code they test.
 
@@ -66,14 +71,6 @@ jobs:
             ${{ toJSON(fromJSON(steps.failure_details.outputs.result).errorLogs) }}
 
             Fix the issues, commit, and push to the branch.
-          allowed_tools: |
-            Read,Grep,Glob,Task,Edit,Write
-            Bash(git diff:*)
-            Bash(git log:*)
-            Bash(git add:*)
-            Bash(git commit:*)
-            Bash(git push:*)
-            Bash(gh pr comment:*)
 
   review:
     if: >
@@ -85,6 +82,7 @@ jobs:
       pull-requests: write
       issues: write
       id-token: write
+      actions: read
     steps:
       - uses: actions/checkout@v4
         with:
@@ -94,18 +92,12 @@ jobs:
       - uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          additional_permissions: |
+            actions: read
+          claude_args: |
+            --allowedTools "Read,Grep,Glob,Task,Edit,Write,Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*),Bash(gh issue create:*),Bash(git add:*),Bash(git commit:*),Bash(git push:*),Bash(git diff:*),Bash(git log:*)"
+            --system-prompt "Read CLAUDE.md first for project-specific coding standards and patterns."
           prompt: |
             /review-pr
             REPO: ${{ github.repository }}
             PR_NUMBER: ${{ github.event.workflow_run.pull_requests[0].number }}
-          allowed_tools: |
-            Read,Grep,Glob,Task,Edit,Write
-            Bash(gh pr comment:*)
-            Bash(gh pr diff:*)
-            Bash(gh pr view:*)
-            Bash(gh issue create:*)
-            Bash(git add:*)
-            Bash(git commit:*)
-            Bash(git push:*)
-            Bash(git diff:*)
-            Bash(git log:*)
