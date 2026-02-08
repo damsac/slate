@@ -21,6 +21,7 @@ goal: "<one sentence>"
 author: "<github-username>"
 project: "Slate"
 tags: [<tag>, ...]
+issue: ""                        # optional — GitHub issue number or URL
 conversation_id: "<uuid>"        # optional
 commit_hash: "<sha>"             # filled at commit time
 created: "<ISO 8601>"
@@ -78,6 +79,7 @@ git diff $ARGUMENTS...HEAD -- 'workflows/' 'CLAUDE.md'
 4. **Broken prompt↔meta links** — Meta entries listing prompts in `prompts:` that don't exist, or prompts associated with work described in a meta entry but not listed.
 5. **Meta entry gaps** — `previous:` field pointing to a non-existent entry, or numbering gaps in the sequence.
 6. **CLAUDE.md staleness** — If the PR changes project structure, conventions, or learnings, check whether CLAUDE.md should be updated to reflect them.
+7. **Missing issue link** — Prompt files whose `goal` references a GitHub issue number (e.g., "#12") but have an empty `issue` field.
 
 ### What to Ignore
 
