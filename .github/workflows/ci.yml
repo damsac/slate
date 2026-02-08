@@ -18,6 +18,15 @@ jobs:
         with:
           xcode-version: '26.2'
 
+      - name: Cache Homebrew packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/Library/Caches/Homebrew
+            /opt/homebrew/Cellar/xcodegen
+            /opt/homebrew/Cellar/xcbeautify
+          key: brew-${{ runner.os }}-xcodegen-xcbeautify
+
       - name: Install tools
         run: brew install xcodegen xcbeautify
 
