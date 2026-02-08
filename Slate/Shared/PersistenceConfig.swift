@@ -4,11 +4,12 @@ import SwiftData
 enum PersistenceConfig {
     static let appGroupIdentifier: String = {
         // Read from Info.plist which is generated from build settings
-        if let identifier = Bundle.main.object(forInfoDictionaryKey: "AppGroupIdentifier") as? String {
-            return identifier
+        // This will be set if APP_GROUP_IDENTIFIER is configured in project.local.yml
+        guard let identifier = Bundle.main.object(forInfoDictionaryKey: "AppGroupIdentifier") as? String,
+              !identifier.isEmpty else {
+            fatalError("AppGroupIdentifier not configured — ensure APP_GROUP_IDENTIFIER is set in project.local.yml")
         }
-        // Fallback to default if not configured
-        return "group.com.damsac.slate.shared"
+        return identifier
     }()
     static let schemaVersion = 2
 
