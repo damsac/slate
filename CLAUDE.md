@@ -22,7 +22,7 @@ Dev tools are provided by a Nix flake (`flake.nix`) and auto-activated via diren
 |------|---------|
 | `flake.nix` | Pins xcodegen, swiftlint, xcbeautify, gnumake |
 | `.envrc` | `use flake` — direnv activates the devShell |
-| `Makefile` | `generate`, `build`, `lint`, `clean`, `help` |
+| `Makefile` | `generate`, `build`, `test`, `lint`, `clean`, `help` |
 | `project.local.yml` | Per-developer settings (gitignored) — copy from `project.local.yml.template` |
 | `project.yml` | XcodeGen spec — includes `project.local.yml` when present |
 

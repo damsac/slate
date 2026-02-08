@@ -47,7 +47,22 @@ targets:
     dependencies:
       - target: TodoWidgetExtension
     scheme:
-      testTargets: []
+      testTargets:
+        - SlateTests
+
+  SlateTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: SlateTests
+        excludes:
+          - "**/.DS_Store"
+    dependencies:
+      - target: Slate
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.damsac.slate.tests
+        GENERATE_INFOPLIST_FILE: true
 
   TodoWidgetExtension:
     type: app-extension
