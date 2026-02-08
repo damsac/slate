@@ -33,20 +33,23 @@ Ask the user (via `AskUserQuestion`) what this entry covers:
 
 ## Step 3: Mine Conversation History
 
-Session transcripts live in `~/.claude/projects/`. Project directories are named with path separators replaced by dashes (e.g., `-Users-claude-Slate`).
-
-**Critical: conversations may be scattered across multiple project directories.** Research phases often happen in home dir (`-Users-claude`), brainstorming dirs, or predecessor project dirs. Always search broadly.
+Session transcripts live in `~/.claude/projects/`. The current project directory is named with the workspace absolute path's separators replaced by dashes (e.g., `/Users/me/Slate` → `-Users-me-Slate`).
 
 ### Discovery process
 
-1. **List all project directories:**
+First, derive the project directory name:
+```bash
+PROJECT_DIR=$(pwd | sed 's|/|-|g')
+```
+
+1. **Find sessions for this project:**
    ```bash
-   ls ~/.claude/projects/
+   ls ~/.claude/projects/${PROJECT_DIR}/*.jsonl
    ```
 
-2. **Search for relevant sessions** across ALL project dirs using keywords from the current work (feature names, file names, tech terms):
+2. **Search for relevant sessions** using keywords from the current work:
    ```
-   Grep pattern="keyword1|keyword2" path="~/.claude/projects/" glob="*.jsonl"
+   Grep pattern="keyword1|keyword2" path="~/.claude/projects/${PROJECT_DIR}/" glob="*.jsonl"
    ```
    Note: Use unquoted keywords (not JSON-escaped). The JSONL content is raw text.
 
@@ -89,7 +92,7 @@ previous: "<NNN-1>"  # omit for 000
 sessions:
   - id: <session-uuid-prefix>
     slug: <short-description>
-    dir: <project-dir-name>  # e.g., Slate, TodoFlow, brainstorming, home
+    dir: <project-dir-name>
 prompts: []  # backlinks filled as prompts are created
 created: "<ISO 8601>"
 updated: "<ISO 8601>"
