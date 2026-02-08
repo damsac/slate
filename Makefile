@@ -18,7 +18,7 @@ generate: ## Generate Xcode project and validate entitlements
 	@echo "Project generated — entitlements validated."
 
 build: generate ## Build for simulator (no code signing required)
-	xcodebuild \
+	set -o pipefail && xcodebuild \
 		-scheme $(SCHEME) \
 		-destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
 		-configuration Debug \
@@ -27,7 +27,7 @@ build: generate ## Build for simulator (no code signing required)
 		build 2>&1 | xcbeautify
 
 test: generate ## Run unit tests on simulator
-	xcodebuild \
+	set -o pipefail && xcodebuild \
 		-scheme $(SCHEME) \
 		-destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
 		-configuration Debug \
