@@ -47,6 +47,8 @@ Read in parallel:
 
 Build a mental model: what was the developer trying to do, what decisions did they make, and what should a reviewer understand?
 
+6. **Linked issues**: Check prompt files for a non-empty `issue` field. Collect these — they'll be used to auto-close issues in the PR description.
+
 ## Step 3: Determine PR structure
 
 Infer the PR type from the changes:
@@ -85,6 +87,7 @@ If any of these are present, the PR description **must** include a **"Setup / en
 ```markdown
 ## <Opening context>
 1-3 sentences: what this PR is and why it matters. Not a commit message — frame it for the reviewer.
+If prompt files have linked issues, add `Closes #<number>` (one per line) so GitHub auto-closes them on merge.
 
 ---
 

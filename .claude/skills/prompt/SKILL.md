@@ -59,6 +59,7 @@ goal: "<one sentence>"
 author: "<user>"
 project: "<project name>"
 tags: [<framework>, <domain>, <theme>]
+issue: ""                                    # optional — GitHub issue number (e.g. 12) or URL
 conversation_id: "<claude code conversation id if available>"
 commit_hash: "<filled at commit time>"
 created: "<ISO 8601 timestamp>"
@@ -90,7 +91,7 @@ created: "<ISO 8601 timestamp>"
 ### Prompt File Indexing
 
 Frontmatter fields are the index. Searchable by:
-- `author`, `project`, `tags`, `conversation_id`, `commit_hash`, `status`
+- `author`, `project`, `tags`, `issue`, `conversation_id`, `commit_hash`, `status`
 
 Use `Grep` across `workflows/prompts/` frontmatter to query the library.
 
