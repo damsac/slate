@@ -16,13 +16,21 @@
           # Validate entitlements if project.yml is being committed
           if git diff --cached --name-only | grep -qE '(project\.yml|project\.local\.yml)'; then
             echo "project.yml changed — validating entitlements..."
-            test -f project.local.yml || touch project.local.yml
+            if [ ! -f project.local.yml ]; then
+              echo "ERROR: project.local.yml not found" >&2
+              echo "Copy project.local.yml.template to project.local.yml and configure your settings" >&2
+              exit 1
+            fi
+            APP_GROUP=$(grep 'APP_GROUP_IDENTIFIER:' project.local.yml 2>/dev/null | awk '{print $2}')
+            if [ -z "$APP_GROUP" ]; then
+              echo "ERROR: APP_GROUP_IDENTIFIER not set in project.local.yml" >&2
+              echo "Set APP_GROUP_IDENTIFIER in project.local.yml" >&2
+              exit 1
+            fi
             ${pkgs.xcodegen}/bin/xcodegen generate --quiet
-            # Read APP_GROUP from project.local.yml if present, otherwise use default
-            APP_GROUP=$(grep 'APP_GROUP_IDENTIFIER:' project.local.yml 2>/dev/null | awk '{print $2}' || echo "group.com.damsac.slate.shared")
             for f in Slate/Slate.entitlements SlateWidget/SlateWidget.entitlements; do
-              if ! grep -q "group\." "$f" 2>/dev/null; then
-                echo "ERROR: $f missing App Group identifier" >&2
+              if ! grep -q "$APP_GROUP" "$f" 2>/dev/null; then
+                echo "ERROR: $f missing App Group identifier '$APP_GROUP'" >&2
                 echo "Check project.yml entitlements.properties for both targets." >&2
                 exit 1
               fi
@@ -75,27 +83,19 @@
               ln -sf ${postMergeHook} .git/hooks/post-merge
             fi
 
-            # Check Xcode version
+            # Enforce Xcode version >= 26
             if command -v xcodebuild &> /dev/null; then
               XCODE_VERSION=$(xcodebuild -version 2>/dev/null | head -n1 | awk '{print $2}' | cut -d. -f1)
               if [ -n "$XCODE_VERSION" ]; then
-                if [ "$XCODE_VERSION" -ge 26 ]; then
-                  echo "⚠️  WARNING: Xcode $XCODE_VERSION detected"
-                  echo "   Known issue: CLI builds may fail with linker errors"
-                  echo "   Workaround: Use Xcode GUI (Cmd+R) or see Issue #6"
+                if [ "$XCODE_VERSION" -lt 26 ]; then
+                  echo "❌ ERROR: Xcode $XCODE_VERSION detected, but Xcode 26+ is required"
+                  echo "   Please upgrade to Xcode 26.2 or later"
+                  exit 1
                 fi
               fi
             else
-              echo "⚠️  WARNING: xcodebuild not found — Xcode may not be installed"
-            fi
-
-            # Check disk space
-            DISK_SPACE=$(df -k . | tail -1 | awk '{print $4}')
-            DISK_SPACE_GB=$((DISK_SPACE / 1024 / 1024))
-            if [ "$DISK_SPACE_GB" -lt 10 ]; then
-              echo "⚠️  WARNING: Low disk space detected (${DISK_SPACE_GB}GB free)"
-              echo "   Xcode DerivedData can consume significant space"
-              echo "   To free space: rm -rf ~/Library/Developer/Xcode/DerivedData"
+              echo "❌ ERROR: xcodebuild not found — Xcode must be installed"
+              exit 1
             fi
 
             echo "Slate dev shell — run 'make help' for available targets"
