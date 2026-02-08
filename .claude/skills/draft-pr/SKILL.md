@@ -59,9 +59,20 @@ Infer the PR type from the changes:
 
 If the type is genuinely ambiguous (e.g., a large PR touching many concerns), ask the human. Otherwise, proceed — minimize human-in-the-loop when the diff speaks for itself.
 
-The structure adapts based on type:
+### Check for dev environment impacts
 
-**Initial setup / onboarding-heavy**: Walk reviewers through the repo as a learning experience. Lead with workflow and philosophy, code second. Use numbered steps.
+Before drafting, scan the diff for changes that affect other developers' environments:
+
+- **`flake.nix` / `flake.lock`** → new or updated Nix dependencies — devs need `direnv reload`
+- **`project.yml` / `project.local.yml.template`** → Xcode project changes — devs need `make generate`, and possibly new `project.local.yml` values
+- **`.envrc`** → direnv config changed
+- **`Makefile`** → new or changed targets
+- **New entitlements or App Group identifiers** → may require provisioning profile updates for physical devices
+- **Any new env vars, config files, or secrets** → devs need to set these up locally
+
+If any of these are present, the PR description **must** include a **"Setup / env changes"** callout section (before the checklist) so reviewers and other devs know what to do after pulling.
+
+### Structure by type
 
 **Feature / fix**: Lead with what changed and why. Link to the meta entry for the full story. Focus the PR on what reviewers need to verify.
 
@@ -88,6 +99,12 @@ Link "where to read more" to specific sections of meta entries or files.
 
 ## Architecture (if changed)
 ASCII diagram of how components connect. Keep it simple.
+
+## Setup / env changes (if applicable)
+What devs need to do after pulling this branch:
+- e.g. `direnv reload` (flake changed)
+- e.g. Copy new key from `project.local.yml.template`
+- e.g. Set `FOO_API_KEY` env var (see 1Password / team wiki)
 
 ## Checklist
 - [ ] Items matching the steps above
