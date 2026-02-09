@@ -19,8 +19,8 @@ generate: ## Generate Xcode project and validate entitlements
 	fi
 	xcodegen generate
 	@for f in $(ENTITLEMENTS); do \
-		if ! grep -q '$(APP_GROUP)' "$$f" 2>/dev/null; then \
-			echo "ERROR: $$f missing App Group '$(APP_GROUP)'" >&2; \
+		if ! grep -q 'APP_GROUP_IDENTIFIER' "$$f" 2>/dev/null; then \
+			echo "ERROR: $$f missing App Group entitlement" >&2; \
 			echo "Check project.yml entitlements.properties for both targets." >&2; \
 			exit 1; \
 		fi; \
