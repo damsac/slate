@@ -9,18 +9,28 @@ Interactive walkthrough to get a new developer from zero to a working Slate buil
 
 ## Rules
 
+- **Check for dev shell tools first** — if `xcodegen`, `swiftlint`, or `make` aren't on PATH, instruct the developer to run `direnv allow` in the project directory, restart their shell, and re-launch Claude Code
 - **Ask before reading files outside `~/Slate/`** — explain why.
 - **Ask before installing system packages** — present what and why, let the dev approve.
 - **Never run destructive commands** without explicit approval.
 - **One phase at a time** — confirm each passes before moving on.
 - **Report results as checklists** after each phase.
 
+## Phase 0: Environment Check
+
+Before starting, verify the dev shell is active:
+
+1. Check if `xcodegen` is on PATH: `which xcodegen`
+2. If not found:
+   - Tell the developer: "The Nix dev shell is not active. Please run `direnv allow` in the project directory, restart your shell, and re-launch Claude Code"
+   - Exit the skill — wait for the developer to restart with the dev shell active
+
 ## Phase 1: System Requirements
 
 Check each, report pass/fail:
 
 1. `sw_vers` — macOS 14+
-2. `xcode-select -p` and `xcodebuild -version` — Xcode 15+
+2. `xcode-select -p` and `xcodebuild -version` — Xcode 26.2+ (recommended by dev team, but not enforced)
 3. Xcode license — `sudo xcodebuild -license status` (ask before sudo). If not accepted: `sudo xcodebuild -license accept`
 4. Nix — `nix --version`. If missing: `curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh`
 5. direnv — `direnv --version`. If missing: install via Nix or system package manager, add shell hook.
@@ -45,14 +55,20 @@ Fix gaps with dev approval before continuing.
 3. No runtime → tell dev: Xcode → Settings → Platforms → download iOS 17+
 4. No device → `xcrun simctl create "iPhone 16" com.apple.CoreSimulator.SimDeviceType.iPhone-16 <runtime-id>`
 
-## Phase 4: Generate and Build
+## Phase 4: Configuration and Build
 
-1. `make generate` — runs xcodegen and validates entitlements
-2. Verify both entitlements files contain `group.com.damsac.slate.shared`
-3. `xcodebuild -project Slate.xcodeproj -list` — confirm targets: `Slate`, `TodoWidgetExtension`
-4. `make build` — simulator build via xcbeautify
-5. On failure, check [troubleshooting.md](references/troubleshooting.md) for common fixes
-6. On success: "Simulator build works. Open Slate.xcodeproj, select the simulator, Cmd+R to run."
+1. Check if `project.local.yml` exists. If not:
+   - `cp project.local.yml.template project.local.yml`
+   - Ask dev for their Apple Development Team ID (Xcode → Settings → Accounts)
+   - Edit `project.local.yml`: set `DEVELOPMENT_TEAM` to their Team ID
+   - Update bundle IDs if needed (free accounts must use custom bundle IDs)
+   - Update `APP_GROUP_IDENTIFIER` to match bundle ID prefix (e.g., `group.com.yourusername.slate.shared`)
+2. `make generate` — runs xcodegen and validates entitlements
+3. Verify both entitlements files contain the configured App Group identifier
+4. `xcodebuild -project Slate.xcodeproj -list` — confirm targets: `Slate`, `TodoWidgetExtension`
+5. `make build` — simulator build via xcbeautify
+6. On failure, check [troubleshooting.md](references/troubleshooting.md) for common fixes
+7. On success: "Simulator build works. Open Slate.xcodeproj, select the simulator, Cmd+R to run."
 
 ## Phase 5: Physical Device (Optional)
 
@@ -87,14 +103,14 @@ Ask the dev if they want to set this up. Skip if no.
 Present and mark each:
 
 ```
-[ ] Xcode 15+ installed and licensed
+[ ] Xcode installed and licensed (26.2+ recommended)
 [ ] Nix installed, direnv hooked into shell
 [ ] Dev shell activates (xcodegen, swiftlint, xcbeautify on PATH)
 [ ] iOS 17+ simulator available
+[ ] project.local.yml created and configured (required)
 [ ] make generate succeeds with entitlements validated
 [ ] make build succeeds
 [ ] App runs in simulator (Cmd+R)
-[ ] (Optional) project.local.yml configured with team ID
 [ ] (Optional) App runs on iPhone
 [ ] (Optional) Home screen widget works
 [ ] (Optional) Lock screen widget works

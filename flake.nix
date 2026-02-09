@@ -16,12 +16,21 @@
           # Validate entitlements if project.yml is being committed
           if git diff --cached --name-only | grep -qE '(project\.yml|project\.local\.yml)'; then
             echo "project.yml changed — validating entitlements..."
-            test -f project.local.yml || touch project.local.yml
+            if [ ! -f project.local.yml ]; then
+              echo "ERROR: project.local.yml not found" >&2
+              echo "Copy project.local.yml.template to project.local.yml and configure your settings" >&2
+              exit 1
+            fi
+            APP_GROUP=$(grep 'APP_GROUP_IDENTIFIER:' project.local.yml 2>/dev/null | awk '{print $2}')
+            if [ -z "$APP_GROUP" ]; then
+              echo "ERROR: APP_GROUP_IDENTIFIER not set in project.local.yml" >&2
+              echo "Set APP_GROUP_IDENTIFIER in project.local.yml" >&2
+              exit 1
+            fi
             ${pkgs.xcodegen}/bin/xcodegen generate --quiet
-            APP_GROUP="group.com.damsac.slate.shared"
             for f in Slate/Slate.entitlements SlateWidget/SlateWidget.entitlements; do
               if ! grep -q "$APP_GROUP" "$f" 2>/dev/null; then
-                echo "ERROR: $f missing App Group '$APP_GROUP'" >&2
+                echo "ERROR: $f missing App Group identifier '$APP_GROUP'" >&2
                 echo "Check project.yml entitlements.properties for both targets." >&2
                 exit 1
               fi
@@ -73,6 +82,21 @@
               ln -sf ${preCommitHook} .git/hooks/pre-commit
               ln -sf ${postMergeHook} .git/hooks/post-merge
             fi
+
+            # Warn if Xcode version doesn't match team recommendation
+            if command -v xcodebuild &> /dev/null; then
+              XCODE_VERSION=$(xcodebuild -version 2>/dev/null | head -n1 | awk '{print $2}' | cut -d. -f1)
+              if [ -n "$XCODE_VERSION" ]; then
+                if [ "$XCODE_VERSION" -lt 26 ]; then
+                  echo "⚠️  WARNING: Xcode $XCODE_VERSION detected, but the team recommends Xcode 26.2+"
+                  echo "   Some features may not work as expected on older versions"
+                fi
+              fi
+            else
+              echo "⚠️  WARNING: xcodebuild not found — Xcode installation not detected"
+              echo "   You'll need Xcode installed to build the project"
+            fi
+
             echo "Slate dev shell — run 'make help' for available targets"
           '';
         };
