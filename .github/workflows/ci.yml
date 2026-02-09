@@ -30,5 +30,17 @@ jobs:
       - name: Install tools
         run: brew install xcodegen xcbeautify
 
+      - name: Configure CI environment
+        run: |
+          cat > project.local.yml << 'EOF'
+          settings:
+            base:
+              DEVELOPMENT_TEAM: CI_PLACEHOLDER
+              PRODUCT_BUNDLE_IDENTIFIER_SLATE: com.ci.slate
+              PRODUCT_BUNDLE_IDENTIFIER_WIDGET: com.ci.slate.widget
+              PRODUCT_BUNDLE_IDENTIFIER_TESTS: com.ci.slate.tests
+              APP_GROUP_IDENTIFIER: group.com.ci.slate.shared
+          EOF
+
       - name: Run tests
         run: make test
