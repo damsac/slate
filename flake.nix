@@ -83,19 +83,18 @@
               ln -sf ${postMergeHook} .git/hooks/post-merge
             fi
 
-            # Enforce Xcode version >= 26
+            # Warn if Xcode version doesn't match team recommendation
             if command -v xcodebuild &> /dev/null; then
               XCODE_VERSION=$(xcodebuild -version 2>/dev/null | head -n1 | awk '{print $2}' | cut -d. -f1)
               if [ -n "$XCODE_VERSION" ]; then
                 if [ "$XCODE_VERSION" -lt 26 ]; then
-                  echo "❌ ERROR: Xcode $XCODE_VERSION detected, but Xcode 26+ is required"
-                  echo "   Please upgrade to Xcode 26.2 or later"
-                  exit 1
+                  echo "⚠️  WARNING: Xcode $XCODE_VERSION detected, but the team recommends Xcode 26.2+"
+                  echo "   Some features may not work as expected on older versions"
                 fi
               fi
             else
-              echo "❌ ERROR: xcodebuild not found — Xcode must be installed"
-              exit 1
+              echo "⚠️  WARNING: xcodebuild not found — Xcode installation not detected"
+              echo "   You'll need Xcode installed to build the project"
             fi
 
             echo "Slate dev shell — run 'make help' for available targets"

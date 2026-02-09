@@ -30,7 +30,7 @@ Before starting, verify the dev shell is active:
 Check each, report pass/fail:
 
 1. `sw_vers` — macOS 14+
-2. `xcode-select -p` and `xcodebuild -version` — Xcode 26.2+ (required)
+2. `xcode-select -p` and `xcodebuild -version` — Xcode 26.2+ (recommended by dev team, but not enforced)
 3. Xcode license — `sudo xcodebuild -license status` (ask before sudo). If not accepted: `sudo xcodebuild -license accept`
 4. Nix — `nix --version`. If missing: `curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh`
 5. direnv — `direnv --version`. If missing: install via Nix or system package manager, add shell hook.
@@ -103,7 +103,7 @@ Ask the dev if they want to set this up. Skip if no.
 Present and mark each:
 
 ```
-[ ] Xcode 26.2+ installed and licensed
+[ ] Xcode installed and licensed (26.2+ recommended)
 [ ] Nix installed, direnv hooked into shell
 [ ] Dev shell activates (xcodegen, swiftlint, xcbeautify on PATH)
 [ ] iOS 17+ simulator available
