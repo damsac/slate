@@ -89,8 +89,6 @@ targets:
         ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME: WidgetBackground
         SWIFT_EMIT_LOC_STRINGS: true
         LD_RUNPATH_SEARCH_PATHS: "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks"
-      info:
-        - path: SlateWidget/Info.plist
     entitlements:
       path: SlateWidget/SlateWidget.entitlements
       properties:
